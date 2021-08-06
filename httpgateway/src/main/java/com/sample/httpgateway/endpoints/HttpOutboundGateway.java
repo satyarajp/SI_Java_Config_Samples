@@ -16,7 +16,8 @@ public class HttpOutboundGateway {
 	@Bean
 	public IntegrationFlow outGate(){
 		return IntegrationFlows.from("sampleChannel")
-				.handle(Http.outboundGateway("https://catfact.ninja/fact")
+				.handle(Http.outboundGateway("https://catfact.ninja/fact") // {pathParam} appended would consider value from next step
+				//.uriVariable("pathParam", "header[customHeader]") // Fetch header value from incoming request and store in pathParam
 				.httpMethod(HttpMethod.GET)
 				.expectedResponseType(CatFact.class))
 				.get(); // replace '.get()' instead of 'logAndReply()' if printing in log is to be avoided 
